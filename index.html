@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PNG to Raw Base64 (80x80)</title>
+  <title>PNG to Raw Base64 (60x60)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@
   </style>
 </head>
 <body>
-  <h2>Upload PNG and Get Raw Base64 (80x80)</h2>
+  <h2>Upload PNG and Get Raw Base64 (60x60)</h2>
   <input type="file" id="fileInput" accept="image/png"><br>
   <textarea id="base64Output" placeholder="Raw Base64 output will appear here..." readonly></textarea>
 
@@ -37,10 +37,10 @@
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          canvas.width = 80;
-          canvas.height = 80;
+          canvas.width = 60;
+          canvas.height = 60;
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, 80, 80);
+          ctx.drawImage(img, 0, 0, 60, 60);
           const dataURL = canvas.toDataURL('image/png');
           const rawBase64 = dataURL.split(',')[1]; // Remove "data:image/png;base64,"
           base64Output.value = rawBase64;
