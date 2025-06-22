@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PNG to Raw Base64 (90x90)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h2>Upload PNG and Get Raw Base64 (90x90)</h2>
+  <input type="file" id="fileInput" accept="image/png"><br>
+  <textarea id="base64Output" placeholder="Raw Base64 output will appear here..." readonly></textarea>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const base64Output = document.getElementById('base64Output');
+
+    fileInput.addEventListener('change', event => {
+      const file = event.target.files[0];
+      if (!file || file.type !== "image/png") {
+        alert("Please upload a valid PNG file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = 90;
+          canvas.height = 90;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 90, 90);
+          const dataURL = canvas.toDataURL('image/png');
+          const rawBase64 = dataURL.split(',')[1]; // Remove "data:image/png;base64,"
+          base64Output.value = rawBase64;
+        };
+        img.src = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
